@@ -1,0 +1,76 @@
+---
+import SocialLink from '../components/SocialLink.astro';
+---
+<footer>
+    <div class="footer-inner">
+        <div class="footer-copy">
+            <span class="footer-eyebrow">Mais sobre o meu trabalho</span>
+            <h2>Me encontre nas redes sociais</h2>
+        </div>
+        <nav class="footer-links" aria-label="Redes sociais">
+            <SocialLink link="https://www.linkedin.com/in/luiz-henrique-trinca-caldo-34034a189/" platform="LinkedIn" icon="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/linkedin-app-icon.png" />
+            <SocialLink link="https://github.com/luizhtc" platform="GitHub" icon="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/github-white-icon.png" />
+        </nav>
+    </div>
+</footer>
+
+<style>
+    footer {
+        position: relative;
+        overflow: hidden;
+        margin-top: 16px;
+        padding: 36px 16px;
+        background: var(--topbar-bg);
+        color: var(--text-primary);
+    }
+
+    footer::before {
+        position: absolute;
+        top: -90px;
+        right: max(7%, calc((100vw - 980px) / 2));
+        width: 190px;
+        height: 190px;
+        border: 1px solid rgb(242 183 5 / 35%);
+        border-radius: 50%;
+        content: "";
+        pointer-events: none;
+    }
+
+    .footer-inner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        width: min(100%, 980px);
+        margin: 0 auto;
+    }
+
+    .footer-eyebrow {
+        color: var(--color-quaternary);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    h2 {
+        margin: 4px 0;
+        font-size: clamp(1.35rem, 3vw, 1.8rem);
+        line-height: 1.2;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    @media (max-width: 560px) {
+        .footer-inner {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 18px;
+        }
+    }
+</style>

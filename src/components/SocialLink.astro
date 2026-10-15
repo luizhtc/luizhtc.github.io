@@ -1,0 +1,46 @@
+---
+const { platform, link, icon } = Astro.props;
+---
+<a href={link} target="_blank" rel="noopener noreferrer">{platform}</a>
+
+<style define:vars={{ iconUrl: `url("${icon}")` }}>
+    a {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 9px 15px;
+        border: 1px solid rgb(242 242 242 / 30%);
+        border-radius: 999px;
+        color: var(--text-primary);
+        font-size: 0.92rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    a:hover,
+    a:focus-visible {
+        transform: translateY(-2px);
+        border-color: var(--color-quaternary);
+        background: var(--color-quaternary);
+    }
+
+    a[href^="http"]::after {
+        content: "";
+        display: inline-block;
+        width: 17px;
+        height: 17px;
+        background-position: center;
+        background-image: var(--iconUrl);
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        a {
+            transition: none;
+        }
+    }
+</style>

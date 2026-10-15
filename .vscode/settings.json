@@ -1,0 +1,16 @@
+{
+  "eslint.codeActionsOnSave.mode": "problems",
+  "eslint.validate": [
+    "astro",
+    "javascript",
+  ],
+  "stylelint.validate": [
+    "css",
+    "postcss",
+    "html",
+    "vue",
+    "svelte",
+    "astro",
+  ],
+  "editor.tabSize": 2,
+}
