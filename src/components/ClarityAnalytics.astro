@@ -1,0 +1,109 @@
+---
+---
+<div id="clarity-consent-banner" class="clarity-banner-hidden">
+  <p>Este site utiliza o Microsoft Clarity para analisar anonimamente como você interage com as páginas. Aceita essa análise?</p>
+  <div class="clarity-banner-buttons">
+    <button id="clarity-accept-btn" class="btn-accept">Aceitar</button>
+    <button id="clarity-decline-btn" class="btn-decline">Recusar</button>
+  </div>
+</div>
+
+<style>
+  #clarity-consent-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    max-width: 350px;
+    background-color: var(--topbar-bg);
+    color: var(--text-primary);
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+    font-size: 14px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .clarity-banner-hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+  }
+
+  .clarity-banner-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .clarity-banner-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    transition: background-color 0.2s;
+  }
+
+  .btn-accept {
+    background-color: var(--color-primary);
+    color: var(--text-primary);
+  }
+
+  .btn-decline {
+    background-color: transparent;
+    color: #aaaaaa;
+    border: 1px solid #555555;
+  }
+
+  .btn-accept:hover { background-color: #005a9e; }
+  .btn-decline:hover { color: white; border-color: white; }
+</style>
+
+<script is:inline define:vars={{ projectId: "ypev29z70p" }}>
+  function initClarityBanner() {
+    const STORAGE_KEY = "clarity_consent";
+    const banner = document.getElementById("clarity-consent-banner");
+    const acceptBtn = document.getElementById("clarity-accept-btn");
+    const declineBtn = document.getElementById("clarity-decline-btn");
+
+    if (!banner || !acceptBtn || !declineBtn) return;
+
+    function injectClarity(id) {
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", id);
+    }
+
+    const consentStatus = localStorage.getItem(STORAGE_KEY);
+
+    if (consentStatus === "accepted") {
+      injectClarity(projectId);
+    } else if (consentStatus === null) {
+      banner.classList.remove("clarity-banner-hidden");
+    }
+
+    // Ouvintes de eventos limpos
+    acceptBtn.onclick = function() {
+      localStorage.setItem(STORAGE_KEY, "accepted");
+      banner.classList.add("clarity-banner-hidden");
+      injectClarity(projectId);
+    };
+
+    declineBtn.onclick = function() {
+      localStorage.setItem(STORAGE_KEY, "declined");
+      banner.classList.add("clarity-banner-hidden");
+    };
+  }
+
+  initClarityBanner();
+
+  document.addEventListener("astro:after-swap", initClarityBanner);
+</script>
